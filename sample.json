@@ -1,0 +1,26 @@
+{
+  "title": "Simple",
+  "fields": [
+    {
+      "attachment": {
+        "href": "https://www.youtube.com/watch?v=Uui3oT-XBxs",
+        "properties": {
+          "description": "Typeform Home documentary"
+        },
+        "scale": 0.8,
+        "type": "video"
+      },
+      "properties": {
+        "description": "Cool description for the date",
+        "separator": "-",
+        "structure": "DDMMYYYY"
+      },
+      "ref": "nice_readable_date_reference",
+      "title": "Date Title",
+      "type": "date",
+      "validations": {
+        "required": false
+      }
+    }
+  ]
+}
