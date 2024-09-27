@@ -1,6 +1,5 @@
 require("dotenv").config();
 const fs = require("fs").promises;
-const mock = require("mock-fs");
 const multer = require("multer");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { GoogleAIFileManager } = require("@google/generative-ai/server");
@@ -20,10 +19,6 @@ const generationConfig = {
   maxOutputTokens: 8192,
   responseMimeType: "text/plain",
 };
-
-mock({
-  "/temp": {},
-});
 
 const app = express();
 const port = 3000;
@@ -73,15 +68,15 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   const { buffer, mimetype } = req.file;
 
   try {
-    await fs.writeFile("/temp/mediadata.wav", buffer);
+    await fs.writeFile("/tmp/mediadata.wav", buffer);
     // Upload the file to Gemini API from buffer or temp path
-    const uploadResult = await fileManager.uploadFile("/temp/mediadata.wav", {
+    const uploadResult = await fileManager.uploadFile("/tmp/mediadata.wav", {
       mimeType: "audio/wav",
       displayName: req.file.originalname,
     });
 
     const file = uploadResult.file;
-    await fs.unlink("/temp/mediadata.wav");
+    await fs.unlink("/tmp/mediadata.wav");
 
     // Generate content using the uploaded file
     const model = genAI.getGenerativeModel({
