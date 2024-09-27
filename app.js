@@ -8,10 +8,12 @@ const cors = require("cors");
 const express = require("express");
 const form = require("./Form");
 const drive = require("./Drive");
+const util = require("./util");
 
-const apiKey = "AIzaSyAOMgl6Lt9mNASqPRM4zzUUaIcr-w6qm0g";
+const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 const fileManager = new GoogleAIFileManager(apiKey);
+
 const generationConfig = {
   temperature: 1,
   topP: 0.95,
@@ -33,6 +35,7 @@ app.listen(port, () => {
 app.get("/", (req, res) => {
   res.status(200).send("200 OK");
 });
+
 app.post("/create", async (req, res) => {
   try {
     quizData = req.body;
@@ -65,18 +68,22 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     return res.status(400).send("No file uploaded");
   }
 
-  const { buffer, mimetype } = req.file;
+  const { buffer } = req.file;
+  const tempFileName = util.generateRandomHex();
 
   try {
-    await fs.writeFile("/tmp/mediadata.wav", buffer);
-    // Upload the file to Gemini API from buffer or temp path
-    const uploadResult = await fileManager.uploadFile("/tmp/mediadata.wav", {
-      mimeType: "audio/wav",
-      displayName: req.file.originalname,
-    });
+    await fs.writeFile(`/tmp/${tempFileName}.wav`, buffer);
+    // Upload the file to Gemini API from /tmp
+    const uploadResult = await fileManager.uploadFile(
+      `/tmp/${tempFileName}.wav`,
+      {
+        mimeType: "audio/wav",
+        displayName: req.file.originalname,
+      }
+    );
 
     const file = uploadResult.file;
-    await fs.unlink("/tmp/mediadata.wav");
+    await fs.unlink(`/tmp/${tempFileName}.wav`);
 
     // Generate content using the uploaded file
     const model = genAI.getGenerativeModel({
