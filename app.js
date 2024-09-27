@@ -6,6 +6,7 @@ const upload = multer();
 const cors = require("cors");
 const express = require("express");
 const fs = require("fs").promises;
+const mock = require("mock-fs");
 const form = require("./Form");
 const drive = require("./Drive");
 
@@ -19,6 +20,10 @@ const generationConfig = {
   maxOutputTokens: 8192,
   responseMimeType: "text/plain",
 };
+
+mock({
+  "/temp": {},
+});
 
 const app = express();
 const port = 3000;
@@ -68,17 +73,17 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   const { buffer, mimetype } = req.file;
 
   try {
-    await fs.writeFile("mediadata.wav", buffer);
+    await fs.writeFile("/temp/mediadata.wav", buffer);
     console.log("File written to disk");
     // Upload the file to Gemini API from buffer or temp path
-    const uploadResult = await fileManager.uploadFile("mediadata.wav", {
+    const uploadResult = await fileManager.uploadFile("/temp/mediadata.wav", {
       mimeType: "audio/wav",
       displayName: req.file.originalname,
     });
 
     const file = uploadResult.file;
     console.log("File uploaded to gemini");
-    await fs.unlink("mediadata.wav");
+    await fs.unlink("/temp/mediadata.wav");
     console.log("File deleted from disk");
 
     // Generate content using the uploaded file
