@@ -110,6 +110,6 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     res.status(200).send(result.response.text());
   } catch (error) {
     console.error("Error uploading or processing file:", error);
-    res.status(500).send("Failed to process the file.");
+    res.status(500).send(`Failed to process the file: ${error}`);
   }
 });
