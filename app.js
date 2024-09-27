@@ -1,12 +1,12 @@
 require("dotenv").config();
+const fs = require("fs").promises;
+const mock = require("mock-fs");
 const multer = require("multer");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { GoogleAIFileManager } = require("@google/generative-ai/server");
 const upload = multer();
 const cors = require("cors");
 const express = require("express");
-const fs = require("fs").promises;
-const mock = require("mock-fs");
 const form = require("./Form");
 const drive = require("./Drive");
 
@@ -74,7 +74,6 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 
   try {
     await fs.writeFile("/temp/mediadata.wav", buffer);
-    console.log("File written to disk");
     // Upload the file to Gemini API from buffer or temp path
     const uploadResult = await fileManager.uploadFile("/temp/mediadata.wav", {
       mimeType: "audio/wav",
@@ -82,9 +81,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     });
 
     const file = uploadResult.file;
-    console.log("File uploaded to gemini");
     await fs.unlink("/temp/mediadata.wav");
-    console.log("File deleted from disk");
 
     // Generate content using the uploaded file
     const model = genAI.getGenerativeModel({
