@@ -1,7 +1,7 @@
 const { google } = require("googleapis");
 
 // Load the service account key file
-const keyFile = "quithn-78ccc83deebc.json";
+const keyFile = "/quithn-78ccc83deebc.json";
 
 const auth = new google.auth.GoogleAuth({
   keyFile: keyFile,
@@ -14,43 +14,43 @@ const auth = new google.auth.GoogleAuth({
 const forms = google.forms({ version: "v1", auth });
 const drive = google.drive({ version: "v3", auth });
 
-// const questions = [
-//   {
-//     question: "What is the capital of France?",
-//     options: ["Paris", "London", "Berlin", "Madrid"],
-//     correctAnswer: "Paris",
-//     feedBack: "Paris is the capiltal of France",
-//   },
-//   {
-//     question: "Which planet is known as the Red Planet?",
-//     options: ["Earth", "Mars", "Jupiter", "Venus"],
-//     correctAnswer: "Mars",
-//     feedBack: "Mars is the 'Red Planet'",
-//   },
-//   {
-//     question: "What is the largest mammal?",
-//     options: ["Elephant", "Whale", "Shark", "Giraffe"],
-//     correctAnswer: "Whale",
-//     feedBack: "Whale is the largest animal",
-//   },
-//   {
-//     question: "What is the powerhouse of the cell?",
-//     options: ["Nucleus", "Mitochondria", "Ribosome", "Golgi apparatus"],
-//     correctAnswer: "Mitochondria",
-//     feedBack: "Mitochondria powers the cell",
-//   },
-//   {
-//     question: "Who wrote 'Romeo and Juliet'?",
-//     options: [
-//       "William Shakespeare",
-//       "Charles Dickens",
-//       "Mark Twain",
-//       "Jane Austen",
-//     ],
-//     correctAnswer: "William Shakespeare",
-//     feedBack: "It was written by William in 1607",
-//   },
-// ];
+const questions = [
+  {
+    question: "What is the capital of France?",
+    options: ["Paris", "London", "Berlin", "Madrid"],
+    correctAnswer: "Paris",
+    feedBack: "Paris is the capiltal of France",
+  },
+  {
+    question: "Which planet is known as the Red Planet?",
+    options: ["Earth", "Mars", "Jupiter", "Venus"],
+    correctAnswer: "Mars",
+    feedBack: "Mars is the 'Red Planet'",
+  },
+  {
+    question: "What is the largest mammal?",
+    options: ["Elephant", "Whale", "Shark", "Giraffe"],
+    correctAnswer: "Whale",
+    feedBack: "Whale is the largest animal",
+  },
+  {
+    question: "What is the powerhouse of the cell?",
+    options: ["Nucleus", "Mitochondria", "Ribosome", "Golgi apparatus"],
+    correctAnswer: "Mitochondria",
+    feedBack: "Mitochondria powers the cell",
+  },
+  {
+    question: "Who wrote 'Romeo and Juliet'?",
+    options: [
+      "William Shakespeare",
+      "Charles Dickens",
+      "Mark Twain",
+      "Jane Austen",
+    ],
+    correctAnswer: "William Shakespeare",
+    feedBack: "It was written by William in 1607",
+  },
+];
 
 async function createQuizForm(title, description, questions) {
   try {
