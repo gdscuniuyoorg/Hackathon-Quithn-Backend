@@ -1,5 +1,4 @@
 const { google } = require("googleapis");
-const fs = require("fs/promises");
 // Load the service account key file
 const keyObject = {
   type: "service_account",
@@ -16,8 +15,6 @@ const keyObject = {
     "https://www.googleapis.com/robot/v1/metadata/x509/quithn-creator%40quithn.iam.gserviceaccount.com",
   universe_domain: "googleapis.com",
 };
-
-const keyFile = "/quithn-78ccc83deebc.json";
 
 const auth = new google.auth.GoogleAuth({
   credentials: keyObject,
