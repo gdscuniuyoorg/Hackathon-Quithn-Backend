@@ -24,6 +24,7 @@ const generationConfig = {
 
 const app = express();
 const port = 3000;
+const defaultEmail = "quithn.me@gmail.com";
 app.use(cors());
 app.use(express.json());
 
@@ -44,6 +45,7 @@ app.post("/create", async (req, res) => {
     quizQuestions = quizData.questions;
     const formData = await form(quizName, quizDescription, quizQuestions);
     res.status(200).json({ link: formData.formLink, id: formData.formId });
+    await drive(defaultEmail, formData.formId);
   } catch (err) {
     console.log("Error while creating form: ", err);
     res.status(500).send("Server error");
