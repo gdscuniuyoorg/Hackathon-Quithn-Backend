@@ -105,7 +105,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 
   const { buffer } = req.file;
   const tempFileName = util.generateRandomHex();
-  const quizLevel = req.query.level ? req.query.level : "MEDIUM";
+  const textPrompt = req.headers.prompt ? req.headers.prompt : "";
 
   try {
     await fs.writeFile(`/tmp/${tempFileName}.pdf`, buffer);
@@ -143,7 +143,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
         },
       ],
     });
-    const result = await chatSession.sendMessage("");
+    const result = await chatSession.sendMessage(textPrompt);
     try {
       const quizData = JSON.parse(result.response.text());
       const quizName = quizData.name;
