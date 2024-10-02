@@ -56,7 +56,7 @@ const generationConfig = {
 };
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const defaultEmail = "quithn.me@gmail.com";
 app.use(cors());
 app.use(express.json());
