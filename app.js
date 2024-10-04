@@ -88,6 +88,7 @@ app.post("/create", async (req, res) => {
 app.post("/share", async (req, res) => {
   try {
     data = req.body;
+    console.log(data);
     email = data.email;
     id = data.id;
     await drive(email, id);
