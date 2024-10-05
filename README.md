@@ -1,6 +1,6 @@
 # Hackathon-Quithn-Backend
 
-![ew](https://github.com/user-attachments/assets/12e1d774-f210-4b44-9bd1-32d633945121)
+![cover](https://github.com/user-attachments/assets/12e1d774-f210-4b44-9bd1-32d633945121)
 
 
 ## Project Overview
