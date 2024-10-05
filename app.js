@@ -74,7 +74,7 @@ app.post("/create", async (req, res) => {
   try {
     quizData = req.body;
     quizName = quizData.name;
-    quizDescription = "Created by Quithn(GDSC UNIUYO Hackathon 2024)";
+    quizDescription = "Created by Quithn(GDGoC UNIUYO Hackathon 2024)";
     quizQuestions = quizData.questions;
     const formData = await form(quizName, quizDescription, quizQuestions);
     res.status(200).json({ link: formData.formLink, id: formData.formId });
