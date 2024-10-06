@@ -147,7 +147,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     try {
       const quizData = JSON.parse(result.response.text());
       const quizName = quizData.name;
-      const quizDescription = "Created by Quithn(GDSC UNIUYO Hackathon 2024)";
+      const quizDescription = "Created by Quithn(GDGoC UNIUYO Hackathon 2024)";
       const quizQuestions = quizData.questions;
       form(quizName, quizDescription, quizQuestions)
         .then(async (formData) => {
