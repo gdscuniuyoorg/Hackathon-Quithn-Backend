@@ -107,6 +107,7 @@ app.post("/share", async (req, res) => {
     });
     await db.collection("emails").add({
       email: email,
+      createdAt: Timestamp.now(),
       quizId: id,
     });
     res.status(200).send("Done");
