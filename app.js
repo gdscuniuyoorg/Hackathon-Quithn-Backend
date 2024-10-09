@@ -1,5 +1,6 @@
 require("dotenv").config();
 const fs = require("fs").promises;
+const admin = require("firebase-admin");
 const multer = require("multer");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { GoogleAIFileManager } = require("@google/generative-ai/server");
@@ -13,6 +14,14 @@ const util = require("./util");
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 const fileManager = new GoogleAIFileManager(apiKey);
+const serviceAccount = require("./etc/secrets/key.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+const db = admin.firestore();
+const { Timestamp } = admin.firestore;
 
 const generationConfig = {
   temperature: 0.65,
@@ -92,6 +101,14 @@ app.post("/share", async (req, res) => {
     email = data.email;
     id = data.id;
     await drive(email, id);
+    const emailListRef = db.collection("marketing").doc("share");
+    await emailListRef.update({
+      emails: admin.firestore.FieldValue.arrayUnion(email),
+    });
+    await db.collection("emails").add({
+      email: email,
+      quizId: id,
+    });
     res.status(200).send("Done");
   } catch (err) {
     console.log("Error while sharing form: ", err);
