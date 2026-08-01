@@ -19,3 +19,17 @@ This is the frontend of an application that presents the user with a UI to uploa
 - **Gemini API**: Used for parsing PDFs and generating questions.
 - **Google Forms API**: Integrated to create and manage Google Forms quizzes.
 
+## Environment Variables
+Create a `.env` file and set:
+
+- `GEMINI_API_KEY`
+- `GOOGLE_SERVICE_ACCOUNT_JSON` (full Google service account JSON as a single string)
+
+Alternatively, provide these individual Google credential fields:
+
+- `GOOGLE_PROJECT_ID`
+- `GOOGLE_PRIVATE_KEY_ID`
+- `GOOGLE_PRIVATE_KEY` (use `\n` for line breaks)
+- `GOOGLE_CLIENT_EMAIL`
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_X509_CERT_URL` (optional)
